@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maddie Graduates! 🎓 — June 4, 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      min-height: 100%;
+      background: #0d0a1e;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      min-height: 100vh;
+    }
+
+    /* ── Stars ─────────────────────────────────── */
+    #starfield {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      opacity: 0;
+      animation: twinkle var(--d) ease-in-out infinite;
+      animation-delay: var(--delay);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50%       { opacity: var(--op); transform: scale(1); }
+    }
+
+    /* ── Card ───────────────────────────────────── */
+    .card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      background: linear-gradient(160deg, #1e0e40 0%, #0d1f4a 55%, #0b331d 100%);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 28px;
+      padding: 48px 32px 40px;
+      text-align: center;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 50% 0%, rgba(200,150,255,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── Header ─────────────────────────────────── */
+    .cap { font-size: 56px; animation: float 3.5s ease-in-out infinite; display: block; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-10px); }
+    }
+
+    .school {
+      font-size: 10px;
+      letter-spacing: 3.5px;
+      text-transform: uppercase;
+      color: rgba(255,210,80,0.75);
+      margin: 10px 0 6px;
+    }
+
+    .grad-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(44px, 10vw, 64px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.05;
+      text-shadow: 0 0 60px rgba(180,120,255,0.45);
+      margin-bottom: 6px;
+    }
+
+    .grad-sub {
+      font-size: 14px;
+      font-weight: 300;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.4px;
+      margin-bottom: 10px;
+    }
+
+    .date-pill {
+      display: inline-block;
+      background: rgba(255,210,80,0.12);
+      border: 1px solid rgba(255,210,80,0.28);
+      border-radius: 100px;
+      padding: 6px 22px;
+      font-size: 13px;
+      color: rgba(255,210,80,0.9);
+      letter-spacing: 0.5px;
+      margin-bottom: 38px;
+    }
+
+    /* ── Countdown tiles ────────────────────────── */
+    .tiles {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 36px;
+    }
+
+    .tile {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 16px;
+      padding: 20px 16px 14px;
+      min-width: 80px;
+      flex: 1;
+      max-width: 110px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tile::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+
+    .tile-num {
+      display: block;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 8vw, 48px);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1;
+      min-width: 2ch;
+      transition: transform 0.15s ease;
+    }
+
+    .tile-num.bump { transform: scale(1.15); }
+
+    .tile-label {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,210,80,0.7);
+      margin-top: 7px;
+    }
+
+    /* ── Completed state ────────────────────────── */
+    .done-msg {
+      font-family: 'Playfair Display', serif;
+      font-size: 32px;
+      color: #fff;
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .done-sub {
+      font-size: 16px;
+      color: rgba(255,255,255,0.55);
+      font-style: italic;
+    }
+
+    /* ── Buttons ────────────────────────────────── */
+    .btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 13px;
+      font-family: 'DM Sans', sans-serif;
+      color: rgba(255,255,255,0.82);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      letter-spacing: 0.2px;
+    }
+
+    .btn:hover  { background: rgba(255,255,255,0.15); }
+    .btn:active { transform: scale(0.97); }
+
+    .feedback {
+      font-size: 12px;
+      color: rgba(255,210,80,0.8);
+      min-height: 18px;
+      margin-top: 12px;
+    }
+
+    /* ── Confetti ───────────────────────────────── */
+    #confetti-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    .cp {
+      position: absolute;
+      width: 9px;
+      height: 9px;
+      border-radius: 2px;
+      opacity: 0;
+      animation: fall var(--dur) ease-in forwards;
+      animation-delay: var(--delay);
+    }
+
+    @keyframes fall {
+      0%   { opacity: 1;  transform: translateY(-20px) rotate(0deg); }
+      100% { opacity: 0;  transform: translateY(105vh) rotate(900deg); }
+    }
+
+    /* ── Footer ─────────────────────────────────── */
+    .footer {
+      margin-top: 28px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.3px;
+    }
+
+    /* ── Responsive ─────────────────────────────── */
+    @media (max-width: 420px) {
+      .card { padding: 36px 20px 30px; }
+      .tile { min-width: 64px; padding: 14px 10px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="starfield"></div>
+<div id="confetti-layer"></div>
+
+<div class="card">
+  <span class="cap">🎓</span>
+  <p class="school">Los Alamitos High School &nbsp;·&nbsp; Class of 2026</p>
+  <h1 class="grad-name">Maddie</h1>
+  <p class="grad-sub">is graduating!</p>
+  <div class="date-pill">Thursday, June 4, 2026</div>
+
+  <div class="tiles" id="tiles">
+    <div class="tile"><span class="tile-num" id="t-days">--</span><span class="tile-label">Days</span></div>
+    <div class="tile"><span class="tile-num" id="t-hours">--</span><span class="tile-label">Hours</span></div>
+    <div class="tile"><span class="tile-num" id="t-mins">--</span><span class="tile-label">Minutes</span></div>
+    <div class="tile"><span class="tile-num" id="t-secs">--</span><span class="tile-label">Seconds</span></div>
+  </div>
+
+  <div class="btns">
+    <button class="btn" onclick="launchConfetti()">🎉 Celebrate</button>
+    <button class="btn" onclick="copyMsg()">📋 Share message</button>
+  </div>
+  <p class="feedback" id="feedback"></p>
+
+  <p class="footer">Made with love for the Olivas family &nbsp;❤️</p>
+</div>
+
+<script>
+  /* ── Starfield ─────────────────────────────────── */
+  (function(){
+    const sf = document.getElementById('starfield');
+    for (let i = 0; i < 90; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.2 + 0.8;
+      s.style.cssText = [
+        `width:${size}px`, `height:${size}px`,
+        `top:${Math.random()*100}%`, `left:${Math.random()*100}%`,
+        `--d:${2.5+Math.random()*4}s`, `--delay:${Math.random()*5}s`,
+        `--op:${0.35+Math.random()*0.65}`
+      ].join(';');
+      sf.appendChild(s);
+    }
+  })();
+
+  /* ── Countdown ─────────────────────────────────── */
+  const GRAD = new Date('2026-06-04T10:00:00');
+  const els = {
+    days:  document.getElementById('t-days'),
+    hours: document.getElementById('t-hours'),
+    mins:  document.getElementById('t-mins'),
+    secs:  document.getElementById('t-secs'),
+  };
+
+  function pad(n) { return String(n).padStart(2, '0'); }
+
+  function bump(el) {
+    el.classList.remove('bump');
+    void el.offsetWidth;
+    el.classList.add('bump');
+    setTimeout(() => el.classList.remove('bump'), 150);
+  }
+
+  let prevSecs = -1, prevMins = -1, prevHours = -1, prevDays = -1;
+
+  function tick() {
+    const diff = GRAD - new Date();
+    if (diff <= 0) {
+      document.getElementById('tiles').innerHTML =
+        '<div class="done-msg">She did it! 🎉</div>' +
+        '<p class="done-sub">Congratulations, Maddie!</p>';
+      return;
+    }
+
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+
+    if (s !== prevSecs)  { els.secs.textContent  = pad(s); bump(els.secs);  prevSecs  = s; }
+    if (m !== prevMins)  { els.mins.textContent  = pad(m); bump(els.mins);  prevMins  = m; }
+    if (h !== prevHours) { els.hours.textContent = pad(h); bump(els.hours); prevHours = h; }
+    if (d !== prevDays)  { els.days.textContent  = d;      bump(els.days);  prevDays  = d; }
+  }
+
+  tick();
+  setInterval(tick, 1000);
+
+  /* ── Confetti ──────────────────────────────────── */
+  const COLORS = ['#FFD700','#FF6B9D','#7EC8E3','#A8E6CF','#FFB347','#DDA0DD','#ffffff'];
+
+  function launchConfetti() {
+    const layer = document.getElementById('confetti-layer');
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement('div');
+      c.className = 'cp';
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      const isCircle = Math.random() > 0.55;
+      c.style.cssText = [
+        `left:${5 + Math.random()*90}%`,
+        `top:-12px`,
+        `background:${color}`,
+        `border-radius:${isCircle ? '50%' : '2px'}`,
+        `--dur:${1.8 + Math.random()*2.2}s`,
+        `--delay:${i * 20}ms`
+      ].join(';');
+      layer.appendChild(c);
+      setTimeout(() => c.remove(), 5000);
+    }
+  }
+
+  /* ── Share ─────────────────────────────────────── */
+  function copyMsg() {
+    const msg =
+      '🎓 Maddie is graduating from Los Alamitos High School!\n' +
+      '📅 Thursday, June 4, 2026\n' +
+      '🎉 Join us for her graduation celebration — details coming soon!';
+    const fb = document.getElementById('feedback');
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(msg).then(() => {
+        fb.textContent = '✓ Copied to clipboard!';
+        setTimeout(() => fb.textContent = '', 3000);
+      });
+    } else {
+      fb.textContent = 'Copy not supported — try a modern browser.';
+    }
+  }
+
+  /* ── Auto confetti on load ─────────────────────── */
+  window.addEventListener('load', () => setTimeout(launchConfetti, 400));
+</script>
+</body>
+</html>
